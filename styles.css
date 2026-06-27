@@ -337,7 +337,15 @@ canvas {
   font-weight: 800;
 }
 
-.download-button {
+.action-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.download-button,
+.copy-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -354,6 +362,11 @@ canvas {
   transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
+.action-row .download-button,
+.action-row .copy-button {
+  margin-top: 0;
+}
+
 .download-button::before {
   content: "↓";
   margin-right: 8px;
@@ -361,21 +374,38 @@ canvas {
   line-height: 1;
 }
 
+.copy-button {
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--ink);
+}
+
 .download-button:hover:not(:disabled) {
   background: #1e293b;
   transform: translateY(-1px);
 }
 
-.download-button:focus {
+.copy-button:hover:not(:disabled) {
+  background: var(--soft);
+  transform: translateY(-1px);
+}
+
+.download-button:focus,
+.copy-button:focus {
   outline: none;
   box-shadow: 0 0 0 4px var(--focus);
 }
 
-.download-button:disabled {
+.download-button:disabled,
+.copy-button:disabled {
   background: #cbd5e1;
   color: #64748b;
   cursor: not-allowed;
   transform: none;
+}
+
+.copy-button:disabled {
+  border-color: #cbd5e1;
 }
 
 @media (max-width: 1050px) {
@@ -432,5 +462,9 @@ canvas {
 
   .tag {
     align-self: flex-start;
+  }
+
+  .action-row {
+    grid-template-columns: 1fr;
   }
 }

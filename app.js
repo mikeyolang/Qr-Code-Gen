@@ -13,6 +13,7 @@ const plainValue = document.querySelector('#plainValue');
 const storeValue = document.querySelector('#storeValue');
 const downloadPlain = document.querySelector('#downloadPlain');
 const downloadStore = document.querySelector('#downloadStore');
+const copyStoreLink = document.querySelector('#copyStoreLink');
 const statusMessage = document.querySelector('#statusMessage');
 const titleSlots = document.querySelectorAll('[data-title]');
 const previewCards = document.querySelectorAll('[data-preview]');
@@ -118,6 +119,7 @@ async function render() {
 
   downloadPlain.disabled = !promoCode;
   downloadStore.disabled = !promoCode;
+  copyStoreLink.disabled = !promoCode;
   emptyStates.forEach((state) => {
     state.hidden = Boolean(promoCode);
   });
@@ -287,6 +289,47 @@ async function downloadCard(kind) {
   }
 }
 
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  textArea.setAttribute('readonly', '');
+  textArea.style.position = 'fixed';
+  textArea.style.left = '-9999px';
+  document.body.appendChild(textArea);
+  textArea.select();
+
+  const copied = document.execCommand('copy');
+  document.body.removeChild(textArea);
+
+  if (!copied) {
+    throw new Error('Copy command failed.');
+  }
+}
+
+async function copyStoreReferrerLink() {
+  const { store } = getQrValues();
+
+  if (!store) {
+    return;
+  }
+
+  try {
+    await copyText(store);
+    copyStoreLink.textContent = 'Copied';
+    setStatus('Play Store link copied.');
+    window.setTimeout(() => {
+      copyStoreLink.textContent = 'Copy Link';
+    }, 1400);
+  } catch (error) {
+    setStatus('Could not copy automatically. Select the Play Store link from the Encodes box and copy it manually.');
+  }
+}
+
 promoInput.addEventListener('input', () => {
   normalizePromoInput();
   render();
@@ -296,5 +339,6 @@ foregroundInput.addEventListener('input', render);
 backgroundInput.addEventListener('input', render);
 downloadPlain.addEventListener('click', () => downloadCard('plain'));
 downloadStore.addEventListener('click', () => downloadCard('store'));
+copyStoreLink.addEventListener('click', copyStoreReferrerLink);
 window.addEventListener('load', render);
 render();

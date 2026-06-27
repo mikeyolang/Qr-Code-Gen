@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travler App Promo QR Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <div class="brand-mark">QR</div>
+          <div>
+            <h1>Travler App Promo QR Generator</h1>
+            <p>Package: <strong>com.ma3app</strong></p>
+          </div>
+        </div>
+        <div class="mode-pill">Play Store referrer ready</div>
+      </header>
+
+      <section class="workspace" aria-label="Promotional QR code generator">
+        <aside class="control-panel">
+          <label class="field-group" for="promoCode">
+            <span>Promo Code</span>
+            <input
+              id="promoCode"
+              class="text-input promo-input"
+              type="text"
+              placeholder="Type here"
+              autocomplete="off"
+              autocapitalize="characters"
+              spellcheck="false"
+            />
+          </label>
+
+          <label class="field-group" for="cardTitle">
+            <span>Title</span>
+            <input
+              id="cardTitle"
+              class="text-input"
+              type="text"
+              placeholder="Scan to Download"
+              autocomplete="off"
+            />
+          </label>
+
+          <div class="color-grid" aria-label="QR color controls">
+            <label class="color-card" for="foregroundColor">
+              <span>QR Color</span>
+              <span class="color-row">
+                <input id="foregroundColor" type="color" value="#000000" />
+                <strong id="foregroundLabel">#000000</strong>
+              </span>
+            </label>
+
+            <label class="color-card" for="backgroundColor">
+              <span>Background</span>
+              <span class="color-row">
+                <input id="backgroundColor" type="color" value="#ffffff" />
+                <strong id="backgroundLabel">#FFFFFF</strong>
+              </span>
+            </label>
+          </div>
+
+          <p id="statusMessage" class="status-message" role="status" hidden></p>
+        </aside>
+
+        <section class="qr-grid" aria-live="polite">
+          <article class="qr-card" data-card="plain">
+            <div class="card-heading">
+              <div>
+                <span class="eyebrow">QR Code 1</span>
+                <h2>Plain Promo Code</h2>
+              </div>
+              <span class="tag">Raw string</span>
+            </div>
+
+            <div class="qr-preview" data-preview>
+              <h3 class="preview-title" data-title></h3>
+              <div class="canvas-wrap">
+                <canvas id="plainCanvas" width="320" height="320"></canvas>
+                <div class="empty-state" data-empty>Waiting for promo code</div>
+              </div>
+            </div>
+
+            <div class="encoded-box">
+              <span>Encodes</span>
+              <code id="plainValue">Promo code appears here</code>
+            </div>
+
+            <button
+              class="download-button"
+              type="button"
+              id="downloadPlain"
+              disabled
+            >
+              Download PNG
+            </button>
+          </article>
+
+          <article class="qr-card" data-card="store">
+            <div class="card-heading">
+              <div>
+                <span class="eyebrow">QR Code 2</span>
+                <h2>Play Store Deep Link</h2>
+              </div>
+              <span class="tag">Referrer URL</span>
+            </div>
+
+            <div class="qr-preview" data-preview>
+              <h3 class="preview-title" data-title></h3>
+              <div class="canvas-wrap">
+                <canvas id="storeCanvas" width="320" height="320"></canvas>
+                <div class="empty-state" data-empty>Waiting for promo code</div>
+              </div>
+            </div>
+
+            <div class="encoded-box">
+              <span>Encodes</span>
+              <code id="storeValue">Play Store URL appears here</code>
+            </div>
+
+            <button
+              class="download-button"
+              type="button"
+              id="downloadStore"
+              disabled
+            >
+              Download PNG
+            </button>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="local-qrcode.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

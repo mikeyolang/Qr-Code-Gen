@@ -312,6 +312,10 @@ canvas {
   text-align: center;
 }
 
+.empty-state[hidden] {
+  display: none;
+}
+
 .encoded-box {
   min-height: 92px;
   margin-top: 16px;
